@@ -24,34 +24,34 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         allow-no-subscriptions: true
 
-    - uses: azure/cli@v1.0.0
-      name: Create Resource Group
+    # - uses: azure/cli@v1.0.0
+    #   name: Create Resource Group
+    #   with:
+    #     inlineScript: |
+    #       az group create --name ${{ secrets.DEVRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
+
+    #       az group create --name ${{ secrets.PRODRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
+    #     azcliversion: latest
+
+    # - uses: azure/cli@v1.0.0
+    #   with:
+    #     inlineScript: az deployment group create --resource-group ${{ secrets.DEVRESOURCEGROUP }} --name deployinfradev5KrPp7Zji --template-file ARM-DevSecOps.json --verbose --debug
+    #     azcliversion: latest
+
+  DeployProdInfrastructure_Stage_DeployInfrastructure:
+    name: Deploy Production Infrastructure
+    needs: [DeployDevInfrastructure_Stage_DeployInfrastructure]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - # "Note: the 'AZURE_CLIENT_ID' and 'AZURE_TENANT_ID' secret is required to be added into GitHub Secrets. See this blog post for details: https://samlearnsazure.blog/2019/12/13/github-actions/"
+      name: Azure Login
+      uses: azure/login@v2
       with:
-        inlineScript: |
-          az group create --name ${{ secrets.DEVRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
-
-          az group create --name ${{ secrets.PRODRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
-        azcliversion: latest
-
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        allow-no-subscriptions: true
     - uses: azure/cli@v1.0.0
       with:
-        inlineScript: az deployment group create --resource-group ${{ secrets.DEVRESOURCEGROUP }} --name deployinfradev5KrPp7Zji --template-file ARM-DevSecOps.json --verbose --debug
+        inlineScript: az deployment group create --resource-group ${{ secrets.PRODRESOURCEGROUP }} --name deployinfraprod5KrPp7Zji --template-file ARM-DevSecOps-Prod.json
         azcliversion: latest
-
-  # DeployProdInfrastructure_Stage_DeployInfrastructure:
-  #   name: Deploy Production Infrastructure
-  #   needs: [DeployDevInfrastructure_Stage_DeployInfrastructure]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - # "Note: the 'AZURE_CLIENT_ID' and 'AZURE_TENANT_ID' secret is required to be added into GitHub Secrets. See this blog post for details: https://samlearnsazure.blog/2019/12/13/github-actions/"
-  #     name: Azure Login
-  #     uses: azure/login@v2
-  #     with:
-  #       client-id: ${{ secrets.AZURE_CLIENT_ID }}
-  #       tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-  #       allow-no-subscriptions: true
-  #   - uses: azure/cli@v1.0.0
-  #     with:
-  #       inlineScript: az deployment group create --resource-group ${{ secrets.PRODRESOURCEGROUP }} --name deployinfraprod5KrPp7Zji --template-file ARM-DevSecOps-Prod.json
-  #       azcliversion: latest
