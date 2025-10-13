@@ -21,7 +21,7 @@ stages:
         azureSubscription: 'Juice-Dev'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az deployment group create --resource-group $(DEVRESOURCEGROUP) --name deployinfradev --template-file ARM-DevSecOps.json'
+        inlineScript: 'az deployment group create --resource-group $(DEVRESOURCEGROUP) --name deployinfradev --template-file $(Build.SourcesDirectory)\ARM-DevSecOps.json'
         addSpnToEnvironment: true
 
 - stage: DeployProdInfrastructure  
@@ -37,5 +37,5 @@ stages:
         azureSubscription: 'Juice-Prod'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az deployment group create --resource-group $(PRODRESOURCEGROUP) --name deployinfraprod --template-file ARM-DevSecOps-Prod.json'
+        inlineScript: 'az deployment group create --resource-group $(PRODRESOURCEGROUP) --name deployinfraprod --template-file $(Build.SourcesDirectory)\ARM-DevSecOps-Prod.json'
         addSpnToEnvironment: trues
