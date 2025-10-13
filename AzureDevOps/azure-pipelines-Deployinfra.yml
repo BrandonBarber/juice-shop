@@ -6,6 +6,7 @@ resources:
 variables:
 - group: Juice
 
+
 stages:
 - stage: DeployDevInfrastructure  
   displayName: Deploy Development Infrastructure
@@ -13,7 +14,7 @@ stages:
   - job: DeployInfrastructure
     displayName: Deploy Development Infrastructure
     pool:
-      name: 'Default'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: AzureCLI@2
       inputs:
@@ -29,7 +30,7 @@ stages:
   - job: DeployInfrastructure
     displayName: Deploy Production Infrastructure
     pool:
-      name: 'Default'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: AzureCLI@2
       inputs:
