@@ -34,6 +34,7 @@ jobs:
         azcliversion: latest
 
     - uses: azure/cli@v1.0.0
+      name: Create deployment group
       with:
         inlineScript: az deployment group create --resource-group ${{ secrets.DEVRESOURCEGROUP }} --name deployinfradev5KrPp7Zji --template-file ARM-DevSecOps.json
         azcliversion: latest
