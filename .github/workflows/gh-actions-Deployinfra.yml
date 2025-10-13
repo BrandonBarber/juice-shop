@@ -24,19 +24,19 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         allow-no-subscriptions: true
 
+    # - uses: azure/cli@v1.0.0
+    #   name: Create Resource Group
+    #   with:
+    #     inlineScript: |
+    #       az group create --name ${{ secrets.DEVRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
+
+    #       az group create --name ${{ secrets.PRODRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
+    #     azcliversion: latest
+
     - uses: azure/cli@v1.0.0
-      name: Create Resource Group
       with:
-        inlineScript: |
-          az group create --name ${{ secrets.DEVRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
-
-          az group create --name ${{ secrets.PRODRESOURCEGROUP }} --location ${{ secrets.LOCATION }} --tags LabInstance=${{ secrets.LABINSTANCEID }}
+        inlineScript: az deployment group create --resource-group ${{ secrets.DEVRESOURCEGROUP }} --name deployinfradev5KrPp7Zji --template-file ARM-DevSecOps.json
         azcliversion: latest
-
-  #   - uses: azure/cli@v1.0.0
-  #     with:
-  #       inlineScript: az deployment group create --resource-group ${{ secrets.DEVRESOURCEGROUP }} --name deployinfradev5KrPp7Zji --template-file ARM-DevSecOps.json
-  #       azcliversion: latest
 
   # DeployProdInfrastructure_Stage_DeployInfrastructure:
   #   name: Deploy Production Infrastructure
