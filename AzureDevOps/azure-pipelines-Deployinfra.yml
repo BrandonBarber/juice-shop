@@ -3,6 +3,9 @@ trigger: none
 resources:
 - repo: self
 
+variables:
+- group: Juice
+
 stages:
 - stage: DeployDevInfrastructure  
   displayName: Deploy Development Infrastructure
