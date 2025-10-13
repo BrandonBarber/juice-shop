@@ -13,7 +13,7 @@ stages:
   jobs:
   - job: DeployInfrastructure
     displayName: Deploy Development Infrastructure
-    pool:
+    pool: 
       vmImage: 'ubuntu-latest'
     steps:
     - task: AzureCLI@2
