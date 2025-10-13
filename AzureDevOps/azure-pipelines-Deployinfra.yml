@@ -14,10 +14,10 @@ stages:
     steps:
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'Azure-Service-Connection-Development'
+        azureSubscription: 'Juice-Dev'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az deployment group create --resource-group ${{ secrets.DEVRESOURCEGROUP }} --name deployinfradev --template-file ARM-DevSecOps.json'
+        inlineScript: 'az deployment group create --resource-group $(DEVRESOURCEGROUP) --name deployinfradev --template-file ARM-DevSecOps.json'
         addSpnToEnvironment: true
 
 - stage: DeployProdInfrastructure  
@@ -30,8 +30,8 @@ stages:
     steps:
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'Azure-Service-Connection-Production'
+        azureSubscription: 'Juice-Prod'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az deployment group create --resource-group ${{ secrets.PRODRESOURCEGROUP }} --name deployinfraprod --template-file ARM-DevSecOps-Prod.json'
+        inlineScript: 'az deployment group create --resource-group $(PRODRESOURCEGROUP) --name deployinfraprod --template-file ARM-DevSecOps-Prod.json'
         addSpnToEnvironment: trues
